@@ -30,13 +30,13 @@ $user = \vendor\core\App::$app->user;
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Korn framework</a>
+                <a class="navbar-brand" href="/">VKgram</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <?if ($user->isAuth()):?>
+                    <?if ($user->isAdmin()):?>
                     <li><a href="/pdt/index.php">Запуск фоновых</a></li>
                     <?endif;?>
                 </ul>

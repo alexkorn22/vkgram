@@ -13,8 +13,8 @@ define('CACHE', dirname(__DIR__) . '/tmp/cache');
 if (DEBUG == 1) {
     error_reporting(-1);
 }
-
 require LIBS .'/functions.php';
+require ROOT . '/config/AppConfig.php';
 
 spl_autoload_register(function ($class) {
     $nameClass = str_replace('\\','/',$class);

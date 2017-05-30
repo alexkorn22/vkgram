@@ -1,3 +1,4 @@
 /.idea
 /www/tmp
 /www/public/pdt/data
+/www/config/AppConfig.php
