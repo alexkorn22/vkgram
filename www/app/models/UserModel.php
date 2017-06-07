@@ -4,9 +4,8 @@
 namespace app\models;
 
 
-class UserModel extends MainModel {
+class UserModel extends AppModel  {
 
-    protected $id = 0;
     protected $login;
     protected $admin = 0;
     protected static $table = 'users';
@@ -106,6 +105,10 @@ class UserModel extends MainModel {
             }
         }
         return $errors;
+    }
+
+    public function getId(){
+        return $this->id;
     }
 
     public function logout() {

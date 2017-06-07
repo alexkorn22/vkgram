@@ -42,7 +42,7 @@ $user = \vendor\core\App::$app->user;
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <?if ($user->isAuth()):?>
-                        <li><a href="#"><i class="glyphicon glyphicon-user"></i> <?=$user->getPerformance()?></a></li>
+                        <li><a href="/profile/"><i class="glyphicon glyphicon-user"></i> <?=$user->getPerformance()?></a></li>
                         <li><a href="/user/logout/">Выйти</a></li>
                     <?else:?>
                         <li><a href="/user/login/">Войти</a></li>

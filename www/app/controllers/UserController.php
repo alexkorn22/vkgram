@@ -56,10 +56,4 @@ class UserController extends MainController {
         header('Location: /');
     }
 
-    public function isAuthToMain() {
-        if (App::$app->user->isAuth()) {
-            $this->goToIndex();
-        }
-    }
-
 }
