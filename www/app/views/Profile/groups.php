@@ -1,3 +1,8 @@
+<?
+/**
+ * @var array group $data
+ * */
+?>
 <!--Шапка страницы-->
 <ul class="nav nav-tabs">
     <li role="presentation" ><a href="/profile/">Профиль</a></li>
@@ -23,15 +28,17 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>MDK afgdf sdfg sfd gsdf</td>
-            <td><a href="https://vk.com/mudakoff" target="_blank">https://vk.com/mudakoff</a></td>
-            <td>-57846937</td>
-            <td ><span class="glyphicon glyphicon-ok"></span></td>
-            <td>
-                <a class="btn btn-primary" href=""><i class="glyphicon glyphicon-pencil"></i></a>
-                <a class="btn btn-danger" href=""><i class="glyphicon glyphicon-remove"></i></a>
-            </td>
-        </tr>
+        <?foreach ($data as $group): ?>
+            <tr>
+                <td><?=$group->name?></td>
+                <td><a href="<?=$group->link?>" target="_blank"><?=$group->link?></a></td>
+                <td><?=$group->id_vk?></td>
+                <td><?if ($group->notification):?><span class="glyphicon glyphicon-ok"></span><?endif;?> </td>
+                <td>
+                    <a class="btn btn-primary" href=""><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a class="btn btn-danger" href=""><i class="glyphicon glyphicon-remove"></i></a>
+                </td>
+            </tr>
+        <?endforeach;?>
     </tbody>
 </table>

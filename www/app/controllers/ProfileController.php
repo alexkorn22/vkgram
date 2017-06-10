@@ -49,7 +49,7 @@ class ProfileController extends AppController {
 
     public function groupsAction() {
         $this->getCurrentProfile();
-
+        $data = GroupModel::getListFromProfile($this->profile->getId());
         $this->setVars(compact('data'));
     }
 
