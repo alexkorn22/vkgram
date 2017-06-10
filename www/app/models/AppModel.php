@@ -43,4 +43,8 @@ class AppModel extends Model {
         return $this->fields;
     }
 
+    public function getId(){
+        return $this->id;
+    }
+
 }

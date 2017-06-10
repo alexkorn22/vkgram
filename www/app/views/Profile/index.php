@@ -1,4 +1,9 @@
-<h2>Профиль пользователя</h2>
+<!--Шапка страницы-->
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="/profile/">Home</a></li>
+    <li role="presentation"><a href="/profile/groups/">Группы ВК</a></li>
+</ul>
+
 <div class="row">
     <div class="col-md-8 col-md-offset-1">
         <?if(!empty($alerts)):?>

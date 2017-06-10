@@ -13,7 +13,12 @@ use vendor\core\App;
 
 class ProfileController extends AppController {
 
-    public function indexAction() {
+    /**
+     * @var ProfileModel
+     */
+    protected $profile;
+
+    public function getCurrentProfile() {
         $this->isNotAuthToMain();
         $data = [
             'user_id' => App::$app->user->getId(),
@@ -21,23 +26,36 @@ class ProfileController extends AppController {
             'chat_id_tg' => '',
             'get_notification' => '',
         ];
+        $this->profile = new ProfileModel();
+        $this->profile->fillFields($data);
+        $this->profile->getByUserID();
+    }
+
+    public function indexAction() {
+        $this->getCurrentProfile();
         $alerts = [];
-        $profile = new ProfileModel();
-        $profile->fillFields($data);
-        if ($profile->getByUserID()) {
-            $data = $profile->getFields();
-        }
         if ($this->isPost()){
             $data = $_POST;
             if (isset($data['do_save_profile'])) {
-                $profile->fillFields($data);
-                $profile->saveFields();
-                $data = $profile->getFields();
+                $this->profile->fillFields($data);
+                $this->profile->saveFields();
                 $alerts[] = 'Данные успешно сохранены';
             }
         }
+        $data = $this->profile->getFields();
         $this->setVars(compact('data','alerts'));
     }
 
+    public function groupsAction() {
+        $this->getCurrentProfile();
+        $this->setVars(compact('data'));
+    }
+
+    public function addgroupAction() {
+        $this->getCurrentProfile();
+        $this->view = 'group';
+
+//        $this->setVars(compact('data'));
+    }
 
 }
