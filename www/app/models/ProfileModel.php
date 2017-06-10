@@ -8,50 +8,48 @@
 
 namespace app\models;
 
+use vendor\core\App;
+use vendor\core\Cache;
 
 class ProfileModel extends AppModel {
 
     protected static $table = 'profiles';
-    protected $tokenVK = '';
-    protected $chatID = '';
-    protected $notificationGroup = 0;
-    protected $userID = 0;
 
-    public function save($data){
-
-        if ($this->id){
-            $rec = \R::load(self::$table,$this->id);
-        } else {
-            $rec = \R::dispense(self::$table);
-        };
-        $rec->token_vk = $data['token_vk'];
-        $rec->chat_id_tg = $data['chat_id_tg'];
-        $rec->user_id = $data['user_id'];
-        $rec->notification_group = 0;
-        if (isset($data['notification_group'])) {
-            $rec->notification_group = 1;
+    public function getByUserID() {
+        $nameCache = 'getProfileFromUserID';
+        $cacheData = App::$app->cache->get($nameCache);
+        if ($cacheData){
+            $this->fillFields($cacheData);
+            return true;
         }
-        $this->id = \R::store($rec);
-    }
-
-    public function getByUserID($userID) {
         $rec = \R::findOne(self::$table,'user_id = :user_id '
             ,[
-                ':user_id' => $userID,
+                ':user_id' => $this->user_id,
             ]);
         if ($rec == null) {
             $this->id = 0;
             return false;
         } else {
-            $this->tokenVK = $rec->token_vk;
-            $this->chatID = $rec->chat_id_tg;
-            $this->notificationGroup = $rec->notification_group;
-            $this->userID = $rec->user_id;
-            $this->id = $rec->id;
+            $this->fillFields($rec);
+            App::$app->cache->set($nameCache,$this->getFields());
             return true;
         }
     }
 
+    public function fillFields($data){
+        unset($data['do_save_profile']);
+        if (isset($data['get_notification']) && !empty($data['get_notification'])){
+            $data['get_notification'] = 1;
+        }else {
+            $data['get_notification'] = 0;
+        }
+        parent::fillFields($data);
+    }
+
+    public function saveFields(){
+        parent::saveFields();
+        App::$app->cache->set('getProfileFromUserID',$this->getFields());
+    }
 
 
 }

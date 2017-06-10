@@ -22,7 +22,7 @@
                 <div class="col-sm-offset-2 col-sm-10">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="get_notification" <?if (isset($data['get_notification'])){echo 'checked';}?>> Получать оповещения от групп
+                            <input type="checkbox" name="get_notification" <?if ($data['get_notification'] != 0){echo 'checked';}?>> Получать оповещения от групп
                         </label>
                     </div>
                 </div>

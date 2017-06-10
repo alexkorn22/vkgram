@@ -8,14 +8,14 @@ use vendor\libs\Cache;
 /**
  * Class Registry
  * @package vendor\core
- * @property Cache $cache
+ * @property \vendor\core\Cache $cache
  * @property Model $model
  * @property UserModel $user
  */
 class Registry{
 
     /**
-     * @property Cache $cache
+     * @property \vendor\core\Cache $cache
      * @property Model $model
      * @property UserModel $user
      */

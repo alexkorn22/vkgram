@@ -18,7 +18,7 @@ class AppModel extends Model {
     }
 
     public function fillFields($data) {
-        foreach ($this->fields as $key => $value) {
+        foreach ($data as $key => $value) {
             $this->fields[$key] = $data[$key];
         }
     }
@@ -29,14 +29,18 @@ class AppModel extends Model {
         }
     }
 
-    public function save() {
+    public function saveFields() {
         if ($this->id){
-            $record = \R::load(self::$table,$this->id);
+            $record = \R::load(static::$table,$this->id);
         } else {
-            $record = \R::dispense(self::$table);
+            $record = \R::dispense(static::$table);
         };
         $this->fillRecordFields($record);
         $this->id = \R::store($record);
+    }
+
+    public function getFields(){
+        return $this->fields;
     }
 
 }

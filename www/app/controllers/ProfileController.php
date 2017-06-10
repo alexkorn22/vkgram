@@ -17,17 +17,25 @@ class ProfileController extends AppController {
         $this->isNotAuthToMain();
         $data = [
             'user_id' => App::$app->user->getId(),
+            'token_vk' => '',
+            'chat_id_tg' => '',
+            'get_notification' => '',
         ];
+        $profile = new ProfileModel();
+        $profile->fillFields($data);
+        if ($profile->getByUserID()) {
+            $data = $profile->getFields();
+        }
         if ($this->isPost()){
             $data = $_POST;
-            if ($data['do_save_profile']) {
-
+            if (isset($data['do_save_profile'])) {
+                $profile->fillFields($data);
+                $profile->saveFields();
+                $data = $profile->getFields();
             }
-        } else {
-            // получение данных
-
         }
         $this->setVars(compact('data'));
     }
+
 
 }
