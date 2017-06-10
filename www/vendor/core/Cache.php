@@ -13,7 +13,9 @@ class Cache{
         $content['data'] = $data;
         $content['end_time'] = time() + $seconds;
         $mdKey = md5($key);
-        mkdir(CACHE . '/' . substr($mdKey,0, 3));
+        if (!file_exists(CACHE . '/' . substr($mdKey,0, 3))) {
+            mkdir(CACHE . '/' . substr($mdKey,0, 3));
+        }
         if (file_put_contents(CACHE . '/' . substr($mdKey, 0, 3)  . '/' . $mdKey . '.txt', serialize($content))) {
             return true;
         } else {
