@@ -53,7 +53,28 @@ class ProfileModel extends AppModel {
     public function saveFields(){
         parent::saveFields();
         App::$app->cache->set('getProfileFromUserID',$this->getFields());
+        App::$app->cache->delete('ProfileModelGetListWithNotification');
     }
 
+    /**
+     * @return array prof
+     */
+    public static function getListWithNotification() {
+
+        $nameCache = 'ProfileModelGetListWithNotification';
+        $cacheData = App::$app->cache->get($nameCache);
+        if ($cacheData){
+            return $cacheData;
+        }
+        $recs = \R::find(self::$table,'get_notification = ? ',[1]);
+        $result = [];
+        foreach ($recs as $rec){
+            $prof = new ProfileModel();
+            $prof->fillFields($rec);
+            $result[] = $prof;
+        }
+        App::$app->cache->set($nameCache,$result);
+        return $result;
+    }
 
 }
