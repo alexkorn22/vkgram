@@ -1,4 +1,16 @@
 <h2>Профиль пользователя</h2>
+<div class="row">
+    <div class="col-md-8 col-md-offset-1">
+        <?if(!empty($alerts)):?>
+            <div class="alert alert-success" role="alert">
+                <?foreach ($alerts as $alert):?>
+                    <p><?= $alert?></p>
+                <?endforeach;?>
+            </div>
+        <?endif;?>
+    </div>
+</div>
+
 <!-- Форма профиля -->
 <div class="row">
     <div class="col-md-8 col-md-offset-1">

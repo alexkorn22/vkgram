@@ -21,6 +21,7 @@ class ProfileController extends AppController {
             'chat_id_tg' => '',
             'get_notification' => '',
         ];
+        $alerts = [];
         $profile = new ProfileModel();
         $profile->fillFields($data);
         if ($profile->getByUserID()) {
@@ -32,9 +33,10 @@ class ProfileController extends AppController {
                 $profile->fillFields($data);
                 $profile->saveFields();
                 $data = $profile->getFields();
+                $alerts[] = 'Данные успешно сохранены';
             }
         }
-        $this->setVars(compact('data'));
+        $this->setVars(compact('data','alerts'));
     }
 
 
