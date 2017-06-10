@@ -51,4 +51,24 @@ class AppModel extends Model {
         return $this->id;
     }
 
+    /**
+     * @param $id
+     * @return AppModel
+     */
+    public static function getByID($id) {
+        $rec =  \R::findOne( static::$table, ' id = ? ', [ $id ] );
+        $class = get_called_class();
+        $obj = new $class();
+        if ($rec != null) {
+            $obj->fillFields($rec);
+        }
+        return $obj;
+    }
+
+    public function delete() {
+        $rec =  \R::findOne( static::$table, ' id = ? ', [ $this->id ] );
+        if ($rec != null) {
+            \R::trash($rec);
+        }
+    }
 }

@@ -19,7 +19,7 @@ class ProfileController extends AppController {
      */
     protected $profile;
 
-    public function getCurrentProfile() {
+    protected function getCurrentProfile() {
         $this->isNotAuthToMain();
         $data = [
             'user_id' => App::$app->user->getId(),
@@ -54,10 +54,19 @@ class ProfileController extends AppController {
     }
 
     public function addgroupAction() {
+        $this->changeGroup();
+    }
+
+    protected function checkProfile() {
         $this->getCurrentProfile();
         if (!$this->profile->getId()) {
             header('Location: /profile/');
         }
+    }
+
+
+    protected function changeGroup() {
+        $this->checkProfile();
         $this->view = 'group';
         $data = [
             'name' => '',
@@ -80,4 +89,18 @@ class ProfileController extends AppController {
         $this->setVars(compact('data'));
     }
 
+    public function delgroupAction() {
+        $this->checkProfile();
+        if ($this->isGet() && isset($_GET['id'])) {
+            if ($_GET['id']) {
+                $this->delGroup($_GET['id']);
+            }
+        }
+        header('Location: /profile/groups/');
+    }
+
+    protected function delGroup($id) {
+        $group = GroupModel::getByID($id);
+        $group->delete();
+    }
 }
