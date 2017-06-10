@@ -12,7 +12,9 @@ class Cache{
     public function set($key, $data, $seconds = 3600) {
         $content['data'] = $data;
         $content['end_time'] = time() + $seconds;
-        if (file_put_contents(CACHE . '/' . md5($key) . '.txt', serialize($content))) {
+        $mdKey = md5($key);
+        mkdir(CACHE . '/' . substr($mdKey,0, 3));
+        if (file_put_contents(CACHE . '/' . substr($mdKey, 0, 3)  . '/' . $mdKey . '.txt', serialize($content))) {
             return true;
         } else {
             return false;
@@ -20,7 +22,9 @@ class Cache{
     }
 
     public function get($key) {
-        $file = CACHE . '/' . md5($key) . '.txt';
+        $mdKey = md5($key);
+
+        $file = CACHE . '/' . substr($mdKey, 0, 3)  . '/'. $mdKey . '.txt';
         if (file_exists($file)) {
             $content = unserialize(file_get_contents($file));
             if ($content['end_time'] >= time()) {
