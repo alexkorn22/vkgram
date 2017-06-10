@@ -4,7 +4,7 @@
     <li role="presentation"><a href="/profile/groups/">Группы ВК</a></li>
 </ul>
 
-<div class="row">
+<div class="row top_margin">
     <div class="col-md-8 col-md-offset-1">
         <?if(!empty($alerts)):?>
             <div class="alert alert-success" role="alert">

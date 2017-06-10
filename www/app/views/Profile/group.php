@@ -1,5 +1,19 @@
-<h2>Добавление изменение групп</h2>
+<?if ($data['id']):?>
+    <h3>Изменение группы</h3>
+<?else:?>
+    <h3>Добавление группы</h3>
+<?endif;?>
 <div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>
+                <a href="/profile/groups/"><i class="glyphicon glyphicon-arrow-left"></i> вернуться к списку</a>
+            </li>
+        </ol>
+
+    </div>
+</div>
+<div class="row ">
     <div class="col-md-8 col-md-offset-1">
         <form class="form-horizontal" action="/profile/addgroup/" method="POST">
             <!-- Наименование -->

@@ -9,7 +9,7 @@
     <li role="presentation" class="active"><a href="/profile/groups/">Группы ВК</a></li>
 </ul>
 
-<div class="row">
+<div class="row top_margin">
     <div class="col-md-12">
         <a href="/profile/addgroup/" class="btn btn-primary">Добавить группу</a>
     </div>
