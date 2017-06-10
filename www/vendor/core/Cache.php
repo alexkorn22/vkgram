@@ -23,7 +23,6 @@ class Cache{
 
     public function get($key) {
         $mdKey = md5($key);
-
         $file = CACHE . '/' . substr($mdKey, 0, 3)  . '/'. $mdKey . '.txt';
         if (file_exists($file)) {
             $content = unserialize(file_get_contents($file));
@@ -36,7 +35,8 @@ class Cache{
     }
 
     public function delete($key) {
-        $file = CACHE . '/' . md5($key) . '.txt';
+        $mdKey = md5($key);
+        $file = CACHE . '/' . substr($mdKey, 0, 3)  . '/' . $mdKey . '.txt';
         if (file_exists($file)) {
             unlink($file);
         }
