@@ -65,12 +65,12 @@ class ProfileController extends AppController {
     }
 
 
-    protected function changeGroup() {
+    protected function changeGroup($id = 0) {
         $this->checkProfile();
         $this->view = 'group';
         $data = [
             'name' => '',
-            'id' => '',
+            'id' => $id,
             'link' => '',
             'notification' => 0,
             'id_profile' => $this->profile->getId(),
@@ -85,7 +85,15 @@ class ProfileController extends AppController {
                 $group->saveFields();
                 header('Location: /profile/groups/');
             }
-        }
+        } elseif($id != 0) {
+            $group = GroupModel::getByID($id);
+            $dataGroup = $group->getFields();
+            $dataGroup['id'] = $group->getId();
+            if ($dataGroup['id']) {
+                $data = $dataGroup;
+            }
+
+        };
         $this->setVars(compact('data'));
     }
 
@@ -99,8 +107,18 @@ class ProfileController extends AppController {
         header('Location: /profile/groups/');
     }
 
+    public function changegroupAction() {
+        $this->checkProfile();
+        if ($this->isGet() && isset($_GET['id'])) {
+            if ($_GET['id']) {
+                $this->changeGroup($_GET['id']);
+            }
+        }
+    }
+
     protected function delGroup($id) {
         $group = GroupModel::getByID($id);
         $group->delete();
     }
+
 }

@@ -35,7 +35,7 @@
                 <td><?=$group->id_vk?></td>
                 <td><?if ($group->notification):?><span class="glyphicon glyphicon-ok"></span><?endif;?> </td>
                 <td>
-                    <a class="btn btn-primary" href=""><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a class="btn btn-primary" href="/profile/changegroup?id=<?=$group->getId()?>"><i class="glyphicon glyphicon-pencil"></i></a>
                     <a class="btn btn-danger" href="/profile/delgroup?id=<?=$group->getId()?>"><i class="glyphicon glyphicon-remove"></i></a>
                 </td>
             </tr>
