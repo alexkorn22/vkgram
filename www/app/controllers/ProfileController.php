@@ -8,6 +8,7 @@
 
 namespace app\controllers;
 
+use app\models\GroupModel;
 use app\models\ProfileModel;
 use vendor\core\App;
 
@@ -48,14 +49,35 @@ class ProfileController extends AppController {
 
     public function groupsAction() {
         $this->getCurrentProfile();
+
         $this->setVars(compact('data'));
     }
 
     public function addgroupAction() {
         $this->getCurrentProfile();
+        if (!$this->profile->getId()) {
+            header('Location: /profile/');
+        }
         $this->view = 'group';
-
-//        $this->setVars(compact('data'));
+        $data = [
+            'name' => '',
+            'id' => '',
+            'link' => '',
+            'notification' => 0,
+            'id_profile' => $this->profile->getId(),
+            'id_vk' => '',
+            'chat_id_tg' => $this->profile->chat_id_tg,
+        ];
+        if ($this->isPost()) {
+            $data = $_POST;
+            if (isset($data['do_save_group'])) {
+                $group = new GroupModel();
+                $group->fillFields($data);
+                $group->saveFields();
+                header('Location: /profile/groups/');
+            }
+        }
+        $this->setVars(compact('data'));
     }
 
 }

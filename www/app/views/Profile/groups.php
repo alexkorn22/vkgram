@@ -1,6 +1,6 @@
 <!--Шапка страницы-->
 <ul class="nav nav-tabs">
-    <li role="presentation" ><a href="/profile/">Home</a></li>
+    <li role="presentation" ><a href="/profile/">Профиль</a></li>
     <li role="presentation" class="active"><a href="/profile/groups/">Группы ВК</a></li>
 </ul>
 

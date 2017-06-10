@@ -20,6 +20,7 @@ class ProfileModel extends AppModel {
         $cacheData = App::$app->cache->get($nameCache);
         if ($cacheData){
             $this->fillFields($cacheData);
+            $this->id = $cacheData['id'];
             return true;
         }
         $rec = \R::findOne(self::$table,'user_id = :user_id '
@@ -31,7 +32,10 @@ class ProfileModel extends AppModel {
             return false;
         } else {
             $this->fillFields($rec);
-            App::$app->cache->set($nameCache,$this->getFields());
+            $this->id = $rec->id;
+            $forCache = $this->getFields();
+            $forCache['id'] = $this->id;
+            App::$app->cache->set($nameCache,$forCache);
             return true;
         }
     }

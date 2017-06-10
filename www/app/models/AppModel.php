@@ -19,6 +19,10 @@ class AppModel extends Model {
 
     public function fillFields($data) {
         foreach ($data as $key => $value) {
+            if ($key == 'id'){
+                $this->id = $value;
+                continue;
+            }
             $this->fields[$key] = $data[$key];
         }
     }
