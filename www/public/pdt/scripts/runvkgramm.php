@@ -22,7 +22,7 @@
 
 
 $delay = 500;
-$sec = 45;
+$sec = 30;
 $start = time();
 $startAlerts = time();
 $secAlerts = 15 * 60;
