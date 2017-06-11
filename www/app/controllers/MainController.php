@@ -9,9 +9,15 @@ use vendor\core\App;
 use vendor\core\base\View;
 use vendor\core\Registry;
 use vendor\core\User;
+use vendor\libs\Telegram;
 use vendor\libs\VK;
 
 class MainController extends AppController{
+
+    /**
+     * @var Telegram
+     */
+    protected $telegram = false;
 
     public function indexAction() {
 
@@ -19,17 +25,24 @@ class MainController extends AppController{
 
     public function runAction() {
         $this->layout = false;
+        $this->run();
+    }
 
+    public function run() {
         $profiles = ProfileModel::getListWithNotification();
         $idProfiles = [];
         foreach ($profiles as $profile) {
             $idProfiles[] = $profile->getId();
         }
         $groups = GroupModel::getListFromProfilesWithNotification($idProfiles);
+        GroupModel::setLastWallRecords($groups);
         $data = $this->getUnitedData($profiles, $groups);
-        $records = $this->getRecordsVK($data);
-        debug($records);
-
+        $this->setRecordsVK($data);
+        $this->initTelegram();
+        foreach ($data as $item) {
+            $this->sendMsg($item['groups']);
+            $this->saveLastWallRecords($item['groups']);
+        }
     }
 
     protected function getUnitedData($profiles, $groups){
@@ -46,16 +59,40 @@ class MainController extends AppController{
         return $data;
     }
 
-    protected function getRecordsVK($data) {
-        $records = [];
-        foreach ($data as $value) {
+    protected function setRecordsVK(&$data) {
+        foreach ($data as &$value) {
             $profile = $value['profile'];
             $vk = new VK($profile->token_vk);
             foreach ($value['groups'] as $group) {
-                $records[] = $vk->wallTextsGetLast($group->id_vk,0);
+                $records = $vk->wallTextsGetLast($group->id_vk,$group->lastWallRecord);
+                $group->wallRecords = $records['records'];
+                $group->newLastWallRecord = $records['newLastRecordId'];
             }
         }
-        return $records;
+    }
+
+    protected function initTelegram() {
+        $this->telegram = new Telegram(BOT_TOKEN);
+    }
+
+    protected function sendMsg($groups) {
+        if (!$this->telegram) {
+            return false;
+        }
+        foreach ($groups as $group) {
+            $this->telegram->chatId = $group->chat_id_tg;
+            foreach ($group->wallRecords as $wallRecord) {
+//                $this->telegram->sendMessage($wallRecord);
+                debug($wallRecord);
+            }
+        }
+        return true;
+    }
+
+    protected function saveLastWallRecords($groups) {
+        foreach ($groups as $group) {
+            $group->saveNewLastWallRecord();
+        }
     }
 
 }

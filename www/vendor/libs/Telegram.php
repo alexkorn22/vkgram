@@ -1,11 +1,12 @@
 <?php
+namespace vendor\libs;
 
 class Telegram {
 
     private $token;
     protected $api = "https://api.telegram.org/bot";
     public $chatId;
-    public function __construct($token, $chat){
+    public function __construct($token, $chat = ''){
         $this->token = $token;
         $this->api .= $this->token;
         $this->chatId = $chat;

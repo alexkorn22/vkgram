@@ -37,23 +37,22 @@ class VK{
     public function wallTextsGetLast($ownerId,$lastRecordId) {
 
         $data = $this->getWall($ownerId, 2);
-        $newLastRecordId = $lastRecordId;
-        $data = array(
+        $res = array(
             'records' => array(),
-            'newLastRecordId' => 0
+            'newLastRecordId' => $lastRecordId
         );
         foreach ($data as $key=>$value){
             if ($key == 0) {
                 continue;
             }
             if ($value['id'] > $lastRecordId) {
-                $data['records'] = str_replace("<br>","\n",$value['text']);
+                $res['records'][] = str_replace("<br>","\n",$value['text']);
             }
-            if ($value['id'] > $newLastRecordId) {
-                $data['newLastRecordId'] = $value['id'];
+            if ($value['id'] > $res['newLastRecordId']) {
+                $res['newLastRecordId'] = $value['id'];
             }
         }
-        return $data;
+        return $res;
     }
 
 }
