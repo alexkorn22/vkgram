@@ -22,14 +22,22 @@
 
 
 $delay = 500;
-$sec = 30;
+$sec = 45;
 $start = time();
+$startAlerts = time();
+$secAlerts = 15 * 60;
 $PDT->display('start');
 $mainController = new \app\controllers\MainController(\vendor\core\Router::getRoute());
 while($PDT->running()){
+    //execute
     if ((time() - $start) > $sec){
         $start = time();
+        //$PDT->display('execute');
         $mainController->run();
+    }
+    //alerts
+    if ((time() - $startAlerts) > $secAlerts){
+        $startAlerts = time();
         $PDT->display('work');
     }
     $PDT->wait($delay);
