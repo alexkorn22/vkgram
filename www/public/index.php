@@ -1,7 +1,8 @@
 <?php
 use vendor\core\Router;
 require 'front_contoller.php';
-
+session_start();
+\vendor\core\App::$app->user->checkAuth();
 //routers
 Router::add('^page/?(?P<alias>[a-z-]+)?$',['controller'=>'Page','action'=>'view']);
 

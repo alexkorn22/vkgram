@@ -19,4 +19,18 @@
 *			input()						- возвращает ввод из консоли, false если ввода не было
 *			getVariableList($script)	- получить список переменных скрипта
 **/
-?>
+
+
+$delay = 500;
+$sec = 30;
+$start = time();
+$PDT->display('start');
+$mainController = new \app\controllers\MainController(\vendor\core\Router::getRoute());
+while($PDT->running()){
+    if ((time() - $start) > $sec){
+        $start = time();
+        $mainController->run();
+        $PDT->display('work');
+    }
+    $PDT->wait($delay);
+}

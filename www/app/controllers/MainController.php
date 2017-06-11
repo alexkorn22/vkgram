@@ -82,8 +82,7 @@ class MainController extends AppController{
         foreach ($groups as $group) {
             $this->telegram->chatId = $group->chat_id_tg;
             foreach ($group->wallRecords as $wallRecord) {
-//                $this->telegram->sendMessage($wallRecord);
-                debug($wallRecord);
+                $this->telegram->sendMessage($wallRecord);
             }
         }
         return true;

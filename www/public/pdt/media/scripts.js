@@ -21,10 +21,7 @@ var PDT = {
 		$('#status_bar').fadeOut(300);
 	},
 	
-	loadHandler: function(hdl, args, cb, silent){
-		if (!silent) {
-			silent = false;
-		}
+	loadHandler: function(hdl, args, cb, silent = false){
 		$.post("index.php", {handler:hdl, args:args, shell:true}, function(d){
 			if(d.substr(0,1)=='{'||d.substr(0,1)=='['){
 				if(typeof cb == 'function'){
