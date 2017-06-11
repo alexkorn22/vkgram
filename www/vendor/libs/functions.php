@@ -18,3 +18,14 @@ function debug($value,$die = false) {
     }
 
 }
+
+function containsKeys($text, $keys){
+    $res = false;
+    foreach ($keys as $key) {
+        if (false !== mb_stripos($text, $key,0,'UTF-8')){
+            $res = true;
+            break;
+        }
+    }
+    return $res;
+}

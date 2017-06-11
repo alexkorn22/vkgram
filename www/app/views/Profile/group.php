@@ -44,6 +44,12 @@
                     <input type="text" class="form-control" id="input4" placeholder="" name="chat_id_tg" value="<?=$data['chat_id_tg']?>">
                 </div>
             </div>
+            <div class="form-group">
+                <label for="input5" class="col-sm-2 control-label">Ключевые слова</label>
+                <div class="col-sm-10">
+                    <textarea type="text" class="form-control" id="input5" placeholder="" name="keywords"><?=$data['keywords']?></textarea>
+                </div>
+            </div>
             <!-- PASSWORD -->
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">

@@ -76,6 +76,7 @@ class ProfileController extends AppController {
             'id_profile' => $this->profile->getId(),
             'id_vk' => '',
             'chat_id_tg' => $this->profile->chat_id_tg,
+            'keywords' => '',
         ];
         if ($this->isPost()) {
             $data = $_POST;

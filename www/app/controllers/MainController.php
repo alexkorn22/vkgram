@@ -81,7 +81,11 @@ class MainController extends AppController{
         }
         foreach ($groups as $group) {
             $this->telegram->chatId = $group->chat_id_tg;
+            $keywords = explode(',', $group->keywords);
             foreach ($group->wallRecords as $wallRecord) {
+                if (containsKeys($wallRecord, $keywords) == false) {
+                    continue;
+                }
                 $this->telegram->sendMessage($wallRecord);
             }
         }
